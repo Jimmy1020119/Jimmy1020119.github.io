@@ -1,186 +1,48 @@
 ---
-# Chirpy main stylesheet override — must keep front matter
+# Chirpy main stylesheet override — keep front matter
 ---
 
 @use "main";
 
 /* =========================================
-   Spotify-style override
+   Sidebar tweaks (keep stock Chirpy look)
    ========================================= */
 
-:root {
-  --sp-green:      #1DB954;
-  --sp-green-dim:  #158a3e;
-  --sp-radius:     12px;
-  --sp-radius-sm:  8px;
-  --sp-font:       'Inter', 'Noto Sans KR', system-ui, sans-serif;
-  --sp-transition: 0.2s ease;
-}
-
-/* Light mode tokens */
-html:not([data-mode="dark"]) {
-  --sp-bg:         #f8f8f8;
-  --sp-surface:    #ffffff;
-  --sp-surface2:   #f0f0f0;
-  --sp-border:     #e0e0e0;
-  --sp-text:       #121212;
-  --sp-text-muted: #6b7280;
-  --sp-sidebar-bg: #ffffff;
-  --sp-hover:      #f0f0f0;
-}
-
-/* Dark mode tokens */
-html[data-mode="dark"] {
-  --sp-bg:         #121212;
-  --sp-surface:    #1e1e1e;
-  --sp-surface2:   #282828;
-  --sp-border:     #333333;
-  --sp-text:       #ffffff;
-  --sp-text-muted: #b3b3b3;
-  --sp-sidebar-bg: #000000;
-  --sp-hover:      #282828;
-}
-
-/* ── Global ── */
-body {
-  font-family: var(--sp-font) !important;
-  background-color: var(--sp-bg) !important;
-  color: var(--sp-text) !important;
-}
-
-/* ── Sidebar ── */
-#sidebar {
-  background: var(--sp-sidebar-bg) !important;
-  border-right: 1px solid var(--sp-border) !important;
-}
-
-#sidebar .site-title a,
+/* Remove tagline under the site title (it was getting cut off) */
 #sidebar .site-subtitle {
-  color: var(--sp-text) !important;
+  display: none !important;
 }
 
-#sidebar .sidebar-bottom a,
-#sidebar nav a {
-  color: var(--sp-text-muted) !important;
-  border-radius: var(--sp-radius-sm);
-  transition: background var(--sp-transition), color var(--sp-transition);
+/* Safety: never show bullets on the nav menu */
+#sidebar .nav,
+#sidebar .nav .nav-item {
+  list-style: none !important;
 }
 
-#sidebar .sidebar-bottom a:hover,
-#sidebar nav a:hover {
-  background: var(--sp-hover) !important;
-  color: var(--sp-text) !important;
+/* =========================================
+   Widget tokens (only used by my widgets)
+   ========================================= */
+:root {
+  --sp-green:  #1db954;
+  --sp-radius: 12px;
 }
 
-#sidebar nav a.active {
-  color: var(--sp-green) !important;
-  font-weight: 700;
+html:not([data-mode="dark"]) {
+  --sp-surface:  #ffffff;
+  --sp-surface2: #f1f1f1;
+  --sp-border:   #e3e3e3;
+  --sp-text:     #1b1b1e;
+  --sp-muted:    #6b7280;
+  --sp-hover:    #ececec;
 }
 
-/* ── Topbar ── */
-#topbar-wrapper,
-#topbar {
-  background-color: var(--sp-bg) !important;
-  border-bottom: 1px solid var(--sp-border) !important;
-  backdrop-filter: blur(12px);
-}
-
-/* ── Main content ── */
-#main-wrapper {
-  background: var(--sp-bg) !important;
-}
-
-/* ── Cards ── */
-.card,
-.post-preview {
-  background: var(--sp-surface) !important;
-  border: 1px solid var(--sp-border) !important;
-  border-radius: var(--sp-radius) !important;
-  transition: transform var(--sp-transition), box-shadow var(--sp-transition);
-  overflow: hidden;
-}
-
-.card:hover,
-.post-preview:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
-}
-
-/* ── Post list items ── */
-.post-item {
-  border-bottom: 1px solid var(--sp-border) !important;
-}
-.post-item a { color: var(--sp-text) !important; }
-.post-item .post-meta { color: var(--sp-text-muted) !important; }
-
-/* ── Tags & categories ── */
-.tag,
-.post-tag {
-  background: var(--sp-surface2) !important;
-  color: var(--sp-green) !important;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 2px 10px;
-  border: 1px solid var(--sp-green) !important;
-}
-
-/* ── Headings ── */
-h1, h2, h3, h4 { color: var(--sp-text) !important; }
-h1 { font-weight: 900; }
-h2 {
-  border-bottom: 2px solid var(--sp-green) !important;
-  padding-bottom: 6px;
-}
-
-/* ── Links ── */
-.content a,
-#sidebar .site-title a {
-  transition: opacity var(--sp-transition);
-}
-.content a { color: var(--sp-green) !important; text-decoration: none !important; }
-.content a:hover { opacity: 0.8; }
-
-/* ── Buttons ── */
-.btn {
-  border-radius: 20px !important;
-  font-weight: 700;
-  transition: transform var(--sp-transition);
-}
-.btn:hover { transform: scale(1.04); }
-
-/* ── Code blocks ── */
-.highlight, pre {
-  background: var(--sp-surface2) !important;
-  border-radius: var(--sp-radius-sm) !important;
-  border: 1px solid var(--sp-border) !important;
-}
-
-/* ── TOC ── */
-#toc-wrapper {
-  background: var(--sp-surface) !important;
-  border: 1px solid var(--sp-border) !important;
-  border-radius: var(--sp-radius) !important;
-}
-
-/* ── Footer ── */
-footer {
-  background: var(--sp-sidebar-bg) !important;
-  border-top: 1px solid var(--sp-border) !important;
-  color: var(--sp-text-muted) !important;
-}
-
-/* ── Pagination ── */
-.pagination .page-item .page-link {
-  background: var(--sp-surface) !important;
-  border-color: var(--sp-border) !important;
-  color: var(--sp-text) !important;
-  border-radius: var(--sp-radius-sm) !important;
-}
-.pagination .page-item .page-link:hover {
-  background: var(--sp-green) !important;
-  color: #fff !important;
-  border-color: var(--sp-green) !important;
+html[data-mode="dark"] {
+  --sp-surface:  #1e1e1e;
+  --sp-surface2: #262626;
+  --sp-border:   #353535;
+  --sp-text:     #f5f5f5;
+  --sp-muted:    #9aa0a6;
+  --sp-hover:    #2c2c2c;
 }
 
 /* =========================================
@@ -189,13 +51,11 @@ footer {
 #sp-stats-bar {
   display: flex;
   align-items: stretch;
-  gap: 0;
   padding: 8px 10px;
-  margin: 10px 14px 4px;
+  margin: 6px 12px 10px;
   background: var(--sp-surface2);
   border-radius: var(--sp-radius);
   font-size: 0.75rem;
-  color: var(--sp-text-muted);
 }
 
 #sp-stats-bar .sp-stat {
@@ -205,22 +65,22 @@ footer {
   gap: 2px;
   flex: 1;
   padding: 6px 4px;
-  border-radius: var(--sp-radius-sm);
-  transition: background var(--sp-transition);
+  border-radius: 8px;
+  transition: background 0.2s ease;
 }
 #sp-stats-bar .sp-stat:hover { background: var(--sp-hover); }
 
 #sp-stats-bar .sp-stat-value {
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--sp-green);
   line-height: 1;
 }
 #sp-stats-bar .sp-stat-label {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--sp-text-muted);
+  color: var(--sp-muted);
 }
 #sp-stats-bar .sp-stat + .sp-stat {
   border-left: 1px solid var(--sp-border);
@@ -241,7 +101,7 @@ footer {
   border-radius: 12px;
   background: var(--sp-surface2);
   border: 1px solid var(--sp-border);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 #sp-theme-toggle .sp-seg {
@@ -252,25 +112,18 @@ footer {
   justify-content: center;
   border: none;
   background: transparent;
-  color: var(--sp-text-muted);
+  color: var(--sp-muted);
   border-radius: 9px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background var(--sp-transition), color var(--sp-transition);
+  transition: background 0.2s ease, color 0.2s ease;
 }
-
-#sp-theme-toggle .sp-seg:hover {
-  color: var(--sp-text);
-}
+#sp-theme-toggle .sp-seg:hover { color: var(--sp-text); }
 
 #sp-theme-toggle .sp-seg.active {
   background: var(--sp-surface);
   color: var(--sp-text);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-html[data-mode="dark"] #sp-theme-toggle .sp-seg.active {
-  color: var(--sp-green);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* =========================================
@@ -283,7 +136,7 @@ html[data-mode="dark"] #sp-theme-toggle .sp-seg.active {
   margin: 2rem 0;
   border-radius: var(--sp-radius);
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 .slides-wrapper iframe {
   position: absolute;
@@ -291,10 +144,4 @@ html[data-mode="dark"] #sp-theme-toggle .sp-seg.active {
   width: 100%;
   height: 100%;
   border: none;
-}
-
-/* ── Avatar ── */
-.site-avatar img {
-  border-radius: 50% !important;
-  border: 2px solid var(--sp-green) !important;
 }
