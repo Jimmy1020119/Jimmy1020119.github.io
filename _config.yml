@@ -16,10 +16,10 @@ timezone: Asia/Seoul
 
 title: Jimmy's Blog # the main title
 
-tagline: "" # subtitle hidden
+tagline: A minimal, responsive, and feature-rich Jekyll theme for technical writing.
 
 description: >- # used by seo meta and the atom feed
-  Paper reviews, startup notes, and project write-ups.
+  A minimal, responsive, and feature-rich Jekyll theme for technical writing.
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
