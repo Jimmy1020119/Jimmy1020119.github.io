@@ -2,7 +2,7 @@
 title: "[Review] Video Parallel Scaling (VPS): How to Give VideoLLMs More Eyes Without Blowing Up Your Memory"
 date: 2026-06-07
 categories: [Paper Review]
-tags: [VideoLLM, VPS, Inference, Scaling]
+tags: [VideoLLM, VPS, Inference, Scaling, 논문, 리뷰]
 description: "Video Parallel Scaling (VPS) — giving VideoLLMs more eyes without blowing up memory."
 ---
 
@@ -44,4 +44,4 @@ description: "Video Parallel Scaling (VPS) — giving VideoLLMs more eyes withou
 
 ---
 
-*위 요약은 매우 간소화한 설명입니다. 구체적인 수식·벤치마크 수치는 슬라이드를 참고하세요.*  #논문 #리뷰
+*위 요약은 매우 간소화한 설명입니다. 구체적인 수식·벤치마크 수치는 슬라이드를 참고하세요.*
