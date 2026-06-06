@@ -1,0 +1,27 @@
+---
+---
+
+@use "main";
+
+/* ── Total views bar (above sidebar-bottom) ── */
+#sp-total-views {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+#sp-total-views:hover { opacity: 1; }
+
+#sp-total-views .fa-eye {
+  font-size: 0.95rem;
+}
+
+#sp-total-views .sp-views-count {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
