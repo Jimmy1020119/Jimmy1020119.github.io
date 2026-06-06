@@ -1,3 +1,111 @@
-<!-- Google Slides iframe 허용 CSP -->
+<!-- Inter font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<!-- Google Slides iframe CSP -->
 <meta http-equiv="Content-Security-Policy"
   content="frame-src https://docs.google.com https://slides.google.com 'self';">
+
+<!-- Spotify-style: stats bar + dark mode toggle injection -->
+<script>
+(function () {
+  var NS = "jimmy1020119-github-io";
+
+  function fmt(n) {
+    if (n == null) return "—";
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
+    if (n >= 1000)    return (n / 1000).toFixed(1) + "K";
+    return String(n);
+  }
+
+  function apiUp(key) {
+    return fetch("https://api.counterapi.dev/v1/" + NS + "/" + key + "/up", { cache: "no-store" })
+      .then(function(r){ return r.json(); })
+      .then(function(d){ return d.count != null ? d.count : null; })
+      .catch(function(){ return null; });
+  }
+
+  function apiGet(key) {
+    return fetch("https://api.counterapi.dev/v1/" + NS + "/" + key, { cache: "no-store" })
+      .then(function(r){ return r.json(); })
+      .then(function(d){ return d.count != null ? d.count : null; })
+      .catch(function(){ return null; });
+  }
+
+  function injectStats() {
+    var sidebar = document.getElementById("sidebar");
+    if (!sidebar || document.getElementById("sp-stats-bar")) return;
+
+    var bar = document.createElement("div");
+    bar.id = "sp-stats-bar";
+    bar.innerHTML =
+      '<div class="sp-stat">' +
+        '<span class="sp-stat-value" id="sp-views">—</span>' +
+        '<span class="sp-stat-label">조회수</span>' +
+      '</div>' +
+      '<div class="sp-stat">' +
+        '<span class="sp-stat-value" id="sp-visitors">—</span>' +
+        '<span class="sp-stat-label">방문자</span>' +
+      '</div>' +
+      '<div class="sp-stat">' +
+        '<span class="sp-stat-value" id="sp-posts">—</span>' +
+        '<span class="sp-stat-label">포스트</span>' +
+      '</div>';
+
+    var nav = sidebar.querySelector("nav");
+    nav ? sidebar.insertBefore(bar, nav) : sidebar.prepend(bar);
+  }
+
+  function injectToggle() {
+    if (document.getElementById("sp-theme-toggle")) return;
+    var btn = document.createElement("button");
+    btn.id = "sp-theme-toggle";
+    btn.setAttribute("aria-label", "다크/라이트 모드 전환");
+
+    function isDark() {
+      return document.documentElement.getAttribute("data-mode") === "dark";
+    }
+    btn.textContent = isDark() ? "☀️" : "🌙";
+
+    btn.addEventListener("click", function () {
+      var next = isDark() ? "light" : "dark";
+      document.documentElement.setAttribute("data-mode", next);
+      try { localStorage.setItem("chirpy-theme", next); } catch(e){}
+      btn.textContent = next === "dark" ? "☀️" : "🌙";
+    });
+
+    document.body.appendChild(btn);
+  }
+
+  function loadStats() {
+    apiUp("pageviews").then(function(v) {
+      var el = document.getElementById("sp-views");
+      if (el) el.textContent = fmt(v);
+    });
+
+    var COOKIE = "sp_visited";
+    var isNew = !document.cookie.split(";").some(function(c) {
+      return c.trim().indexOf(COOKIE) === 0;
+    });
+
+    (isNew ? apiUp("visitors") : apiGet("visitors")).then(function(v) {
+      if (isNew) {
+        var exp = new Date(Date.now() + 86400000).toUTCString();
+        document.cookie = COOKIE + "=1; expires=" + exp + "; path=/";
+      }
+      var el = document.getElementById("sp-visitors");
+      if (el) el.textContent = fmt(v);
+    });
+
+    var posts = document.querySelectorAll("article.post-preview, li.post-item, .post-preview").length;
+    var elP = document.getElementById("sp-posts");
+    if (elP && posts > 0) elP.textContent = posts;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    injectStats();
+    injectToggle();
+    loadStats();
+  });
+})();
+</script>
