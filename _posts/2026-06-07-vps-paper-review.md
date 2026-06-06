@@ -44,4 +44,4 @@ description: "Video Parallel Scaling (VPS) — giving VideoLLMs more eyes withou
 
 ---
 
-*위 요약은 발표 슬라이드 기준의 개괄 설명입니다. 구체적인 수식·벤치마크 수치는 슬라이드를 참고하세요.*
+*위 요약은 매우 간소화한 설명입니다. 구체적인 수식·벤치마크 수치는 슬라이드를 참고하세요.*  #논문 #리뷰
