@@ -26,15 +26,15 @@
       iconColor = dark ? "#9a9da0" : "#6c757d";
     }
 
-    /* ── nav 바로 아래(About 탭 직후)에 삽입 ── */
-    var nav = document.querySelector("#sidebar nav");
-    if (!nav) return;
+    /* ── <ul> 바로 뒤 (nav 안, About 탭 직후) 에 삽입 ── */
+    var ul = document.querySelector("#sidebar nav ul.nav");
+    if (!ul) return;
 
     var bar = document.createElement("div");
     bar.id = "sp-total-views";
     bar.style.cssText =
       "display:flex;align-items:center;gap:6px;" +
-      "padding:6px 16px 2px;" +
+      "padding:0.25rem 1rem;" +
       "font-size:0.8rem;" +
       "color:" + iconColor + ";";
     bar.innerHTML =
@@ -43,7 +43,7 @@
       '<span id="sp-views-count" style="font-weight:700">—</span>' +
       '<span>views</span>';
 
-    nav.insertAdjacentElement("afterend", bar);
+    ul.insertAdjacentElement("afterend", bar);
 
     fetch("https://api.counterapi.dev/v1/" + NS + "/pageviews/up", { cache: "no-store" })
       .then(function(r) { return r.json(); })
