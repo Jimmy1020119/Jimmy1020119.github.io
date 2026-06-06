@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy"
   content="frame-src https://docs.google.com https://slides.google.com 'self';">
 
-<!-- Spotify-style: stats bar + dark mode toggle injection -->
+<!-- Spotify-style: stats bar + theme toggle injection -->
 <script>
 (function () {
   var NS = "jimmy1020119-github-io";
@@ -41,15 +41,15 @@
     bar.innerHTML =
       '<div class="sp-stat">' +
         '<span class="sp-stat-value" id="sp-views">—</span>' +
-        '<span class="sp-stat-label">조회수</span>' +
+        '<span class="sp-stat-label">Views</span>' +
       '</div>' +
       '<div class="sp-stat">' +
         '<span class="sp-stat-value" id="sp-visitors">—</span>' +
-        '<span class="sp-stat-label">방문자</span>' +
+        '<span class="sp-stat-label">Visitors</span>' +
       '</div>' +
       '<div class="sp-stat">' +
         '<span class="sp-stat-value" id="sp-posts">—</span>' +
-        '<span class="sp-stat-label">포스트</span>' +
+        '<span class="sp-stat-label">Posts</span>' +
       '</div>';
 
     var nav = sidebar.querySelector("nav");
@@ -91,9 +91,9 @@
     wrap.setAttribute("aria-label", "Theme");
 
     var modes = [
-      { key: "system", icon: "fa-desktop",  label: "System" },
-      { key: "light",  icon: "fa-sun",      label: "Light"  },
-      { key: "dark",   icon: "fa-moon",     label: "Dark"   }
+      { key: "system", icon: "fa-desktop", label: "System" },
+      { key: "light",  icon: "fa-sun",     label: "Light"  },
+      { key: "dark",   icon: "fa-moon",    label: "Dark"   }
     ];
 
     var btns = {};
@@ -116,7 +116,6 @@
       });
     }
 
-    // keep system mode in sync with OS changes
     media.addEventListener("change", function () {
       if (current() === "system") apply("system");
     });
@@ -150,10 +149,16 @@
     if (elP && posts > 0) elP.textContent = posts;
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function boot() {
     injectStats();
     injectToggle();
     loadStats();
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();
 </script>
