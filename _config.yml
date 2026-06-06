@@ -16,10 +16,10 @@ timezone: Asia/Seoul
 
 title: Jimmy's Blog # the main title
 
-tagline: A minimal, responsive, and feature-rich Jekyll theme for technical writing.
+tagline: AI Researcher · Seoul, Korea · San Francisco, CA, US
 
 description: >- # used by seo meta and the atom feed
-  A minimal, responsive, and feature-rich Jekyll theme for technical writing.
+  AI Researcher · Seoul, Korea · San Francisco, CA, US
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
@@ -37,9 +37,7 @@ social:
   fediverse_handle:
   links:
     - https://github.com/Jimmy1020119
-    # Uncomment below to add more social links
-    # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/jang-young-choi/
 
 # Site Verification Settings
 webmaster_verifications:
@@ -95,7 +93,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
+avatar: /assets/img/avatar.jpg
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
