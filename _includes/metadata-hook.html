@@ -30,11 +30,15 @@
     var ul = document.querySelector("#sidebar nav ul.nav");
     if (!ul) return;
 
+    /* nav-link 의 실제 left padding 읽어서 아이콘 세로선 맞추기 */
+    var refLink = document.querySelector("#sidebar nav .nav-link");
+    var pl = refLink ? window.getComputedStyle(refLink).paddingLeft : "1.5rem";
+
     var bar = document.createElement("div");
     bar.id = "sp-total-views";
     bar.style.cssText =
       "display:flex;align-items:center;gap:6px;" +
-      "padding:0.25rem 1rem;" +
+      "padding:0.25rem 1rem 0.25rem " + pl + ";" +
       "font-size:0.8rem;" +
       "color:" + iconColor + ";";
     bar.innerHTML =
