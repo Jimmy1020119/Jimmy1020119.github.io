@@ -1,13 +1,13 @@
 ---
+# Chirpy main stylesheet override — must keep front matter
 ---
 
-@import "{{ site.theme }}";
+@use "main";
 
 /* =========================================
    Spotify-style override
    ========================================= */
 
-/* ── CSS variables ── */
 :root {
   --sp-green:      #1DB954;
   --sp-green-dim:  #158a3e;
@@ -18,7 +18,7 @@
 }
 
 /* Light mode tokens */
-[data-mode="light"], html:not([data-mode="dark"]) {
+html:not([data-mode="dark"]) {
   --sp-bg:         #f8f8f8;
   --sp-surface:    #ffffff;
   --sp-surface2:   #f0f0f0;
@@ -30,7 +30,7 @@
 }
 
 /* Dark mode tokens */
-[data-mode="dark"] {
+html[data-mode="dark"] {
   --sp-bg:         #121212;
   --sp-surface:    #1e1e1e;
   --sp-surface2:   #282828;
@@ -50,7 +50,7 @@ body {
 
 /* ── Sidebar ── */
 #sidebar {
-  background-color: var(--sp-sidebar-bg) !important;
+  background: var(--sp-sidebar-bg) !important;
   border-right: 1px solid var(--sp-border) !important;
 }
 
@@ -64,10 +64,12 @@ body {
   color: var(--sp-text-muted) !important;
   border-radius: var(--sp-radius-sm);
   transition: background var(--sp-transition), color var(--sp-transition);
-  &:hover {
-    background: var(--sp-hover) !important;
-    color: var(--sp-text) !important;
-  }
+}
+
+#sidebar .sidebar-bottom a:hover,
+#sidebar nav a:hover {
+  background: var(--sp-hover) !important;
+  color: var(--sp-text) !important;
 }
 
 #sidebar nav a.active {
@@ -83,12 +85,12 @@ body {
   backdrop-filter: blur(12px);
 }
 
-/* ── Main content wrapper ── */
+/* ── Main content ── */
 #main-wrapper {
   background: var(--sp-bg) !important;
 }
 
-/* ── Post cards ── */
+/* ── Cards ── */
 .card,
 .post-preview {
   background: var(--sp-surface) !important;
@@ -96,23 +98,23 @@ body {
   border-radius: var(--sp-radius) !important;
   transition: transform var(--sp-transition), box-shadow var(--sp-transition);
   overflow: hidden;
+}
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
-  }
+.card:hover,
+.post-preview:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
 }
 
 /* ── Post list items ── */
 .post-item {
   border-bottom: 1px solid var(--sp-border) !important;
-
-  a { color: var(--sp-text) !important; }
-  .post-meta { color: var(--sp-text-muted) !important; }
 }
+.post-item a { color: var(--sp-text) !important; }
+.post-item .post-meta { color: var(--sp-text-muted) !important; }
 
 /* ── Tags & categories ── */
-.tag, .category-badge,
+.tag,
 .post-tag {
   background: var(--sp-surface2) !important;
   color: var(--sp-green) !important;
@@ -124,10 +126,7 @@ body {
 }
 
 /* ── Headings ── */
-h1, h2, h3, h4 {
-  color: var(--sp-text) !important;
-}
-
+h1, h2, h3, h4 { color: var(--sp-text) !important; }
 h1 { font-weight: 900; }
 h2 {
   border-bottom: 2px solid var(--sp-green) !important;
@@ -135,20 +134,20 @@ h2 {
 }
 
 /* ── Links ── */
-a {
-  color: var(--sp-green) !important;
-  text-decoration: none !important;
+.content a,
+#sidebar .site-title a {
   transition: opacity var(--sp-transition);
-  &:hover { opacity: 0.8; }
 }
+.content a { color: var(--sp-green) !important; text-decoration: none !important; }
+.content a:hover { opacity: 0.8; }
 
 /* ── Buttons ── */
-.btn-sm, .btn {
+.btn {
   border-radius: 20px !important;
   font-weight: 700;
   transition: transform var(--sp-transition);
-  &:hover { transform: scale(1.04); }
 }
+.btn:hover { transform: scale(1.04); }
 
 /* ── Code blocks ── */
 .highlight, pre {
@@ -157,7 +156,7 @@ a {
   border: 1px solid var(--sp-border) !important;
 }
 
-/* ── Table of contents ── */
+/* ── TOC ── */
 #toc-wrapper {
   background: var(--sp-surface) !important;
   border: 1px solid var(--sp-border) !important;
@@ -177,88 +176,85 @@ footer {
   border-color: var(--sp-border) !important;
   color: var(--sp-text) !important;
   border-radius: var(--sp-radius-sm) !important;
-
-  &:hover {
-    background: var(--sp-green) !important;
-    color: #fff !important;
-    border-color: var(--sp-green) !important;
-  }
+}
+.pagination .page-item .page-link:hover {
+  background: var(--sp-green) !important;
+  color: #fff !important;
+  border-color: var(--sp-green) !important;
 }
 
 /* =========================================
-   Stats Widget
+   Stats bar (sidebar)
    ========================================= */
 #sp-stats-bar {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 14px;
-  margin: 10px 10px 4px;
+  align-items: stretch;
+  gap: 0;
+  padding: 8px 10px;
+  margin: 10px 14px 4px;
   background: var(--sp-surface2);
   border-radius: var(--sp-radius);
   font-size: 0.75rem;
   color: var(--sp-text-muted);
+}
 
-  .sp-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    flex: 1;
-    padding: 6px 4px;
-    border-radius: var(--sp-radius-sm);
-    transition: background var(--sp-transition);
+#sp-stats-bar .sp-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  padding: 6px 4px;
+  border-radius: var(--sp-radius-sm);
+  transition: background var(--sp-transition);
+}
+#sp-stats-bar .sp-stat:hover { background: var(--sp-hover); }
 
-    &:hover { background: var(--sp-hover); }
-
-    .sp-stat-value {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--sp-green);
-      line-height: 1;
-    }
-
-    .sp-stat-label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--sp-text-muted);
-    }
-  }
-
-  .sp-stat + .sp-stat {
-    border-left: 1px solid var(--sp-border);
-  }
+#sp-stats-bar .sp-stat-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--sp-green);
+  line-height: 1;
+}
+#sp-stats-bar .sp-stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sp-text-muted);
+}
+#sp-stats-bar .sp-stat + .sp-stat {
+  border-left: 1px solid var(--sp-border);
 }
 
 /* =========================================
-   Dark mode toggle button (top-right)
+   Dark/Light toggle button (top-right)
    ========================================= */
 #sp-theme-toggle {
   position: fixed;
   top: 14px;
   right: 14px;
   z-index: 9999;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 20px;
   background: var(--sp-surface2);
   border: 1px solid var(--sp-border);
   color: var(--sp-text);
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: var(--sp-font);
   transition: background var(--sp-transition), transform var(--sp-transition);
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-
-  &:hover {
-    background: var(--sp-green);
-    color: #fff;
-    transform: scale(1.1);
-    border-color: var(--sp-green);
-  }
+}
+#sp-theme-toggle:hover {
+  background: var(--sp-green);
+  color: #fff;
+  transform: scale(1.05);
+  border-color: var(--sp-green);
 }
 
 /* =========================================
@@ -272,19 +268,16 @@ footer {
   border-radius: var(--sp-radius);
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-
-  iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
+}
+.slides-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
-/* =========================================
-   Avatar / profile in sidebar
-   ========================================= */
+/* ── Avatar ── */
 .site-avatar img {
   border-radius: 50% !important;
   border: 2px solid var(--sp-green) !important;

@@ -65,13 +65,16 @@
     function isDark() {
       return document.documentElement.getAttribute("data-mode") === "dark";
     }
-    btn.textContent = isDark() ? "☀️" : "🌙";
+    function label() {
+      return isDark() ? "☀️ 라이트 모드" : "🌙 다크 모드";
+    }
+    btn.textContent = label();
 
     btn.addEventListener("click", function () {
       var next = isDark() ? "light" : "dark";
       document.documentElement.setAttribute("data-mode", next);
       try { localStorage.setItem("chirpy-theme", next); } catch(e){}
-      btn.textContent = next === "dark" ? "☀️" : "🌙";
+      btn.textContent = label();
     });
 
     document.body.appendChild(btn);
