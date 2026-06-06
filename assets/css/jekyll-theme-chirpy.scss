@@ -227,34 +227,50 @@ footer {
 }
 
 /* =========================================
-   Dark/Light toggle button (top-right)
+   Theme segmented toggle (system / light / dark)
    ========================================= */
 #sp-theme-toggle {
   position: fixed;
   top: 14px;
   right: 14px;
   z-index: 9999;
-  height: 38px;
-  padding: 0 14px;
-  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 12px;
   background: var(--sp-surface2);
   border: 1px solid var(--sp-border);
-  color: var(--sp-text);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  font-family: var(--sp-font);
-  transition: background var(--sp-transition), transform var(--sp-transition);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
-#sp-theme-toggle:hover {
-  background: var(--sp-green);
-  color: #fff;
-  transform: scale(1.05);
-  border-color: var(--sp-green);
+
+#sp-theme-toggle .sp-seg {
+  width: 34px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--sp-text-muted);
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background var(--sp-transition), color var(--sp-transition);
+}
+
+#sp-theme-toggle .sp-seg:hover {
+  color: var(--sp-text);
+}
+
+#sp-theme-toggle .sp-seg.active {
+  background: var(--sp-surface);
+  color: var(--sp-text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+html[data-mode="dark"] #sp-theme-toggle .sp-seg.active {
+  color: var(--sp-green);
 }
 
 /* =========================================

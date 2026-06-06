@@ -64,9 +64,9 @@ def main():
     date_input = input(f"날짜 [{date_default}]: ").strip()
     date = date_input if date_input else date_default
 
-    print("카테고리 (쉼표 구분, 예: AI, Paper Review): ", end="")
+    print("Category [Paper Review / Startup / Project]: ", end="")
     cats_raw = input().strip()
-    categories = [c.strip() for c in cats_raw.split(",") if c.strip()] or ["Uncategorized"]
+    categories = [c.strip() for c in cats_raw.split(",") if c.strip()] or ["Project"]
 
     print("태그 (쉼표 구분, 예: LLM, Survey): ", end="")
     tags_raw = input().strip()

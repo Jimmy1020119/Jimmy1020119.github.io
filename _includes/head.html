@@ -58,26 +58,71 @@
 
   function injectToggle() {
     if (document.getElementById("sp-theme-toggle")) return;
-    var btn = document.createElement("button");
-    btn.id = "sp-theme-toggle";
-    btn.setAttribute("aria-label", "다크/라이트 모드 전환");
 
-    function isDark() {
-      return document.documentElement.getAttribute("data-mode") === "dark";
-    }
-    function label() {
-      return isDark() ? "☀️ 라이트 모드" : "🌙 다크 모드";
-    }
-    btn.textContent = label();
+    var html = document.documentElement;
+    var media = window.matchMedia("(prefers-color-scheme: dark)");
 
-    btn.addEventListener("click", function () {
-      var next = isDark() ? "light" : "dark";
-      document.documentElement.setAttribute("data-mode", next);
-      try { localStorage.setItem("chirpy-theme", next); } catch(e){}
-      btn.textContent = label();
+    function apply(mode) {
+      if (mode === "light") {
+        html.setAttribute("data-mode", "light");
+      } else if (mode === "dark") {
+        html.setAttribute("data-mode", "dark");
+      } else { // system
+        html.setAttribute("data-mode", media.matches ? "dark" : "light");
+      }
+    }
+
+    function current() {
+      try { return localStorage.getItem("mode") || "system"; } catch (e) { return "system"; }
+    }
+
+    function setMode(mode) {
+      try {
+        if (mode === "system") localStorage.removeItem("mode");
+        else localStorage.setItem("mode", mode);
+      } catch (e) {}
+      apply(mode);
+      render();
+    }
+
+    var wrap = document.createElement("div");
+    wrap.id = "sp-theme-toggle";
+    wrap.setAttribute("role", "group");
+    wrap.setAttribute("aria-label", "Theme");
+
+    var modes = [
+      { key: "system", icon: "fa-desktop",  label: "System" },
+      { key: "light",  icon: "fa-sun",      label: "Light"  },
+      { key: "dark",   icon: "fa-moon",     label: "Dark"   }
+    ];
+
+    var btns = {};
+    modes.forEach(function (m) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "sp-seg";
+      b.title = m.label;
+      b.setAttribute("aria-label", m.label);
+      b.innerHTML = '<i class="fas ' + m.icon + '"></i>';
+      b.addEventListener("click", function () { setMode(m.key); });
+      wrap.appendChild(b);
+      btns[m.key] = b;
     });
 
-    document.body.appendChild(btn);
+    function render() {
+      var cur = current();
+      modes.forEach(function (m) {
+        btns[m.key].classList.toggle("active", m.key === cur);
+      });
+    }
+
+    // keep system mode in sync with OS changes
+    media.addEventListener("change", function () {
+      if (current() === "system") apply("system");
+    });
+
+    document.body.appendChild(wrap);
+    render();
   }
 
   function loadStats() {
